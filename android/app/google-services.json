@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "115092039526",
+    "project_id": "amazing-number-counter",
+    "storage_bucket": "amazing-number-counter.appspot.com",
+    "firebase_url": "https://amazing-number-counter-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115092039526:android:2d5270508c9e87c48a0aa7",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase_og3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115092039526-aem9v6mkrgkau9joh2s0vfchg9l824rg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbKgM_w1zCmlwLpDX-nha_wZ2QPPyGCR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115092039526-aem9v6mkrgkau9joh2s0vfchg9l824rg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
