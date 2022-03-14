@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -13,7 +15,7 @@ void main() async {
   await Firebase.initializeApp(
 
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -51,9 +53,14 @@ class _MyHomePageState extends State<MyHomePage> {
     getValues();
   }
 
+  int random(min, max) {
+    return min + Random().nextInt(max - min);
+  }
+
   void getValues(){
+
     DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("aa");
-    //dbRef.child("$_counter").set(sqrt(_counter));
+
 
     dbRef.onValue.listen((event) {
       muserlist.clear();
@@ -63,8 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
         print(ii.value.toString());
         String userName = ii.child("username").value.toString();
         String description = ii.child("avatar").value.toString();
+        String characterd = ii.child("cd").value.toString();
         print("idd = $userName");
-        muserlist.add(User(UserName: userName, description: description, id: ii.key.toString()));
+        muserlist.add(User(UserName: userName, description: description, id: ii.key.toString() , characterd: characterd));
 
       }
       setState(() {
@@ -74,9 +82,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _incrementCounter() {
+    var rn = random(100, 200);
+
+    DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("aa").child((rn).toString());
+    dbRef.child("username").set("Barbara Gordon");
+    dbRef.child("avatar").set("https://www.dccomics.com/sites/default/files/field/image/BabsCasting_60073b823ebff3.73076079.jpg");
+    dbRef.child("cd").set("https://www.dccomics.com/sites/default/files/field/image/BabsCasting_60073b823ebff3.73076079.jpg");
 
     setState(() {
-      getValues();
     });
   }
 
@@ -90,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
+        
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: ListView.builder(
@@ -98,17 +112,111 @@ class _MyHomePageState extends State<MyHomePage> {
 
             BuildContext context, int index) {
 
-          return Card(
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: ListTile(
-                leading: CircleAvatar(
-                  radius: 20,
-
-                  backgroundImage: NetworkImage(muserlist[index].description ),
+          return Container(
+            margin:  EdgeInsets.symmetric(vertical: 10 , horizontal: 20),
+            decoration:  BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 0, 116, 212),
+                Color.fromARGB(255, 89, 214, 252).withOpacity(0.7),
+              ], begin: Alignment.bottomLeft, end: Alignment.topRight),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(100),
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 10,
+                  color: Colors.blue.withOpacity(0.2),
+                  offset: Offset(10, 10),
                 ),
-                title: Text(muserlist[index].UserName),
-                trailing: Text(muserlist[index].id),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  CircleAvatar(
+
+                    radius: 50,
+                    backgroundImage: NetworkImage(muserlist[index].description , ),
+                  ),
+                  const SizedBox(height: 20,),
+                  Row(
+
+                    children: [
+                      const SizedBox(width: 20,),
+                      Text(muserlist[index].UserName , style: TextStyle(
+                        fontSize: 25,
+                      color: Colors.white,
+                          fontWeight: FontWeight.bold
+                      ),),
+                      Expanded(child: Container()),
+
+                      Icon(Icons.account_balance , color: Colors.white,),
+                      const SizedBox(width: 6,),
+                      Text(muserlist[index].id , style: TextStyle(
+                        fontSize: 25,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold
+
+                      )),
+
+
+                      const SizedBox(width: 20,),
+                    ],
+
+                  ),
+                  const SizedBox(height: 20,),
+                  Padding(padding: const EdgeInsets.all(20) ,
+                    child: Text(muserlist[index].characterd , style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500
+                    ),),),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.timer,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "60 Minutes",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Expanded(child: Container()),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              60,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 10,
+                                  offset: Offset(4, 5),
+                                  color: Colors.blue)
+                            ]),
+                        child: Icon(
+                          Icons.play_circle,
+                          color: Colors.white,
+                          size: 60,
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20,),
+
+                ],
               ),
             ),
           );
