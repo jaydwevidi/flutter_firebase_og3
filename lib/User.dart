@@ -7,10 +7,10 @@ class User {
     required this.id,
     required this.characterd
   });
-  late final String UserName;
-  late final String description;
-  late final String id;
-  late final String characterd;
+  late String UserName;
+  late String description;
+  late String id;
+  late String characterd;
 
   User.fromJson(Map<String?, dynamic> json){
     UserName = json['UserName'];
