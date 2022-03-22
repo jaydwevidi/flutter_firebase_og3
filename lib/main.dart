@@ -41,6 +41,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String xd = "haha";
   var muserlist = <User>[];
+  var selectedList = <String>[];
 
   @override
   void initState() {
@@ -78,13 +79,20 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     var rn = random(100, 200);
 
-    DatabaseReference dbRef =
-        FirebaseDatabase.instance.ref().child("aa").child((rn).toString());
-    dbRef.child("username").set("Barbara Gordon");
-    dbRef.child("avatar").set(
-        "https://www.dccomics.com/sites/default/files/field/image/BabsCasting_60073b823ebff3.73076079.jpg");
-    dbRef.child("cd").set(
-        "https://www.dccomics.com/sites/default/files/field/image/BabsCasting_60073b823ebff3.73076079.jpg");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailsPage(
+          cUser: User(
+            id: random(100, 200).toString(),
+            UserName: "New User Name",
+            description:
+                "https://www.dccomics.com/sites/default/files/field/image/BabsCasting_60073b823ebff3.73076079.jpg",
+            characterd: "Character Discription",
+          ),
+        ),
+      ),
+    );
 
     setState(() {});
   }
@@ -198,7 +206,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 5,
                               ),
                               Text(
-                                "60 Minutes",
+                                selectedList.contains(muserlist[index].id)
+                                    ? "60 Minutes"
+                                    : "30 Selected",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -234,6 +244,17 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             ),
                           ),
+                          /*
+                          ElevatedButton(
+                            onPressed: () {
+                              selectedList.add(muserlist[index].id);
+                              setState(() {});
+                            },
+                            child: Text(
+                              "Select",
+                            ),
+                          ),
+                          */
                         ],
                       ),
                     ),

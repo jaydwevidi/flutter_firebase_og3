@@ -80,6 +80,17 @@ class _DetailsPageState extends State<DetailsPage> {
                   log("user Updated to $updatedUser");
                 },
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    DatabaseReference dbRef = FirebaseDatabase.instance
+                        .ref()
+                        .child("aa")
+                        .child(widget.cUser.id);
+
+                    dbRef.remove();
+                    Navigator.pop(context, true);
+                  },
+                  child: Text("delete"))
             ],
           ),
         ),
